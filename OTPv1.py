@@ -86,7 +86,7 @@ def covert_ascii(x):
         10: "<LF>",
         13: "<CR>",
         32: "Space",
-        38: "&&",
+        38: "&",
         160: "Null",
         150: "–",
         9: "tab"
@@ -98,20 +98,22 @@ def covert_ascii(x):
 def show_table_otp(chrx):
     x = 0
     for i in chrx:
-        print(covert_ascii(i),end=' ')
+       # print(covert_ascii(i),end='\t')
+        #test
+        writetxt_text(covert_ascii(i)+' ')
         x = x+1
-        print() if x%10 == 0 else print('',end='')
+        #print() if x%10 == 0 else print('',end='')
+        writetxt_text('\n') if x%10 == 0 else print('',end='')
 def getChrformChrX(chr_input,chrx):
     index_set = int(chr_input)*3
     return covert_ascii(chrx[index_set:index_set+3])
-
-#fortest
-
+def writetxt_text(x):
+    with open("output.txt", "a", encoding="utf-8") as file:
+        file.write(x)
 def interface_en(inputx,chrx,keyx):
     enc_chr = encrypt_chr(inputx,[chrx[i:i+3] for i in range(0, len(chrx), 3)])
     enc_total = encrypt_key(inputx,enc_chr,keyx)
     return " ".join(enc_total[i:i+4] for i in range(0, len(enc_total), 4))
-
 def interface_de(inputx,chrx,keyx):
     inputx = inputx.replace(' ','')
     x = decrypt_key(inputx,keyx)
@@ -119,7 +121,24 @@ def interface_de(inputx,chrx,keyx):
     for i in x:
         result_decrypt += getChrformChrX(i,chrx)
     return result_decrypt.replace("Space",' ')
-
+def interface_get_char_table(chrx):
+    chrx_c = [chrx[i:i+3] for i in range(0, len(chrx), 3)]
+    return_variable = []
+    for i in chrx_c:
+        #print(covert_ascii(i))
+        return_variable.append(covert_ascii(i))
+    return return_variable
+def interface_get_key_table(keyx):
+    return_variable = []
+    c = 0
+    textx = ''
+    for i in keyx:
+        c += 1
+        textx += str(i)
+        if c%4 == 0:
+            return_variable.append(textx)
+            textx =''
+    return return_variable    
 #fortest
 def setup():
     chrx = '069046072174249195070094179105043124122210209193059118063035170183041119116190098205092057242102050169047171246198100224061060048207086040107240228042075191213232049103096089037033093077192097217032055206163114082056200034106185039244226161112109203164165167058088236173229184052243188078053176108085123051248241182076233081071121201045245225168235062101214181237074091177038084197115234208120095194196044126087104204212172189110113079202067036065178111187180066009230227247160128199216125215186099090175073054166162010083064068117211231080'
@@ -134,3 +153,4 @@ def setup():
     x = decrypt_key(enc_total,key_chr)
     for i in x:
         getChrformChrX(i,chrx)
+
