@@ -86,13 +86,20 @@ def decrypt_key(Key,value_i):
 
     decrypts = list(range((len(value_i))))
 
-    print(decrypts)
+    #print(decrypts)
     start = 0
+    counting = 1
+    sorted_value = [0] * len(replaced_key)
     for index,value in sorted_indexed_values:
-
+        sorted_value[index] = counting
+        counting += 1
         for i in range(0,value_v):
             #print((index)+(len(Key)*i))
             decrypts[(index)+(len(Key)*i)] = value_i[start]
             start+=1
+    cutline = []
+    for i in range(0, len(value_i),len(Key)):
+        cutline.append(''.join(decrypts[i:i + len(Key)]))
 
-    return ''.join(decrypts)
+    return Key,math.ceil(len(value_i)/5),replaced_key,sorted_value,''.join(decrypts),cutline
+    #return ''.join(decrypts)

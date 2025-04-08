@@ -46,7 +46,9 @@ async def decrypt(k:class_use.encrypt):
     key = k.key 
     value = k.value
     s = k.secretkey
-    return { "data": fe.decrypt_key(key,value) }
+    Key_return,LenWord,replaced_key,sort_Key,data,cc = fe.decrypt_key(key,value)
+    return { "data": data ,"Key_Return":Key_return,"Len_word":LenWord,"Replace_Key":replaced_key,"Sort_Key":sort_Key,"cc":cc }
+    #return { "data": fe.decrypt_key(key,value) }
 
 @app.get('/otpkey')
 def otpkey():
@@ -63,3 +65,11 @@ async def otpde(c:class_use.otp):
     #        'data_chr': otp.generate_chr(),
     #    'data_key': otp.generate_key()
 
+@app.post('/otp_table')
+async def open_table(c:class_use.k_c_otp):
+    if c.types == "CHR":
+        return { 'data' : otp.interface_get_char_table(c.value)}
+    elif c.types == "KEY":
+        return { 'data' :otp.interface_get_key_table(c.value)}
+    else:
+        return { 'data' : "Not Found"}
