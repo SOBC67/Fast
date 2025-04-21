@@ -1,44 +1,60 @@
-thai_keyboard_array = [
-    ['/', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙', '๐', '-'],
-    ['ๆ', 'X', 'P', 'K', 'N', '-', 'อึ', 'Y', '-', 'L (โอ)', 'อ', 'ฝ'],
-    ['+', ',', 'ทรทบ', 'ทวน', 'ป', 'ความถี่', 'ผิด', 'ฆ', 'ญ', 'ฎ', 'ฐ', 'ฑ'],
-    ['ภ', 'พ', '(', 'ศ (ศูย์)', 'ฤ', 'A', 'ฎ', 'ฏ', 'ฐ', 'ข', 'ฃ', 'ฑ'],
-    ['(', 'ษ', 'T', 'ฝ', '.', '(', '(', 'C', '(', 'Z', 'ก', 'M'],
-    ['ณ', 'ญ', 'ฐ', 'ฑ', '-', '/', 'ฦ', '(', '(', 'ส', 'F', '('],
-    ['ฒ', 'J', 'พื้นที่', 'ฒ', '(', '(', '(', '(', '(', '(', '(', 'ว'],
-    ['?', 'R', 'ผ่าน', 'Q', 'เพื่อ', '(', 'V', '(', 'U', '(', '(', 'หย'],
-    ['(', '(', '(', '(', '(', '(', '(', 'D', '(', '(', 'ม', 'ห'],
-    ['(', '(', '(', 'จ', '(', 'ผ', '(', 'G', '(', '(', 'S', 'B'],
-    ['(', 'H', '(', '(', 'บริเวณ', '(', '(', '(', '(', '(', '(', '(']
-]
-
-def compare_word(word, keyboard_array):
-    """
-    เปรียบเทียบตัวอักษรในคำกับอาร์เรย์แป้นพิมพ์
-
-    Args:
-        word (str): คำที่ต้องการเปรียบเทียบ
-        keyboard_array (list): อาร์เรย์แทนแป้นพิมพ์
-
-    Returns:
-        dict: ผลการเปรียบเทียบ โดยมีคีย์เป็นตัวอักษรในคำ
-              และค่าเป็น True หากพบตัวอักษรในอาร์เรย์แป้นพิมพ์, False หากไม่พบ
-    """
-    comparison_result = {}
-    for char in word:
-        found = False
-        for row in keyboard_array:
-            if char in row:
-                found = True
-                break
-        comparison_result[char] = found
-    return comparison_result
+def compare_text_with_array(text_array, long_text):
+    result_bits = ""
+    while len(long_text) >= 0:
+        checkfind = 0
+        for ta,ka in enumerate(text_array):
+            for w,k in enumerate(ka):
+                if isinstance(k, list):
+                    if len(k) > 1:
+                        #print(k)
+                        for ww,kk in enumerate(k):
+                            if long_text.find(kk) == 0:
+                                result_bits += str(ta)+str(w)
+                                #print(ta,end='')
+                                #print(w,end='')
+                                #print(kk)
+                                long_text = long_text[len(kk):]
+                                checkfind = 1
+                elif long_text.find(k) == 0:
+                    result_bits += str(ta)+str(w)
+                    #print(ta,end='')
+                    #print(w,end='')
+                    #print(k)
+                    long_text = long_text[len(k):]
+                    checkfind = 1
+        if checkfind == 0:
+            break
+    return result_bits
 
 # ตัวอย่างการใช้งาน
-word_to_compare = "สวัสดี"
-comparison = compare_word(word_to_compare, thai_keyboard_array)
-print(f"ผลการเปรียบเทียบคำว่า '{word_to_compare}': {comparison}")
+#text_array = [['สวัสดี', 'ลาก่อน'], ['รัก', 'คุณ']]
 
-word_to_compare_2 = "abc"
-comparison_2 = compare_word(word_to_compare_2, thai_keyboard_array)
-print(f"ผลการเปรียบเทียบคำว่า '{word_to_compare_2}': {comparison_2}")
+
+'''
+text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S", "B"],
+["อ","X", "P", "K", "N", "ื", "ฉ", "Y", "เ", "O"],
+["ชณ",",","ทธฑฒ","ทวน", "ป", "ความถี่", "พิกัด", "ย่อ", "L", "๘"],
+["๑","พภ","0","ึ", "A", "ดฎ", "ิ", "ข", "I", "W"],
+["M","ะ","T","ฝ", ".", "ี", "C", "๊", "Z", "ก"],
+["้","นณ","ฮ","ซ", "แ", "/", "ลฤ", "๙", "สศษ", "F"],
+["ว","J","พื้นที่","๓", "๋", "คฆ", "วรรค", "ู", "า", "โ"],
+["ยญ","R","ผ่าน","Q", "เพื่อ", "V", "๕", "บ", "U", "ไ"],
+["ห","่","ั","๒", "ถฐ", "์", "รฦฬ", "D", "ง", "ม"],
+["ุ","ตฏ","๔","จ", "ๆ", "ผ", "ำ", "( - )", "็", "ั้"]]
+'''
+
+text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S", "B"],
+["อ","X", "P", "K", "N", "ื", "ฉ", "Y", "เ", "O"],
+[["ช","ณ"],",",['ท','ธ','ฑ','ฒ'],"ทวน", "ป", "ความถี่", "พิกัด", "ย่อ", "L", "๘"],
+["๑",["พ","ภ"],"0","ึ", "A", ["ด","ฎ"], "ิ", "ข", "I", "W"],
+["M","ะ","T","ฝ", ".", "ี", "C", "๊", "Z", "ก"],
+["้",["น","ณ"],"ฮ","ซ", "แ", "/", ["ล","ฤ"], "๙", ["ส","ศ","ษ"], "F"],
+["ว","J","พื้นที่","๓", "๋", ["ค","ฆ"], " ", "ู", "า", "โ"],
+[["ย","ญ"],"R","ผ่าน","Q", "เพื่อ", "V", "๕", "บ", "U", ["ไ","ใ"]],
+["ห","่","ั","๒", ["ถ","ฐ"], "์", ["ร","ฦ","ฬ"], "D", "ง", "ม"],
+["ุ",["ต","ฏ"],"๔","จ", "ๆ", "ผ", "ำ", "( - )", "็", "ั้"]]
+
+def otp10en(long_text):
+    rx = compare_text_with_array(text_array, long_text)
+    return " ".join(rx[i:i+4] for i in range(0, len(rx), 4))
+#print(otp10('พื้นที่ที่มึงจะต้องกินข้าววรรคสัศใช่ไหม'))

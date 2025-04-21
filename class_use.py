@@ -12,3 +12,6 @@ class otp(BaseModel):
 class k_c_otp(BaseModel):
     value:str
     types:str
+
+class otp10(BaseModel):
+    value: str

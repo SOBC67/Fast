@@ -4,6 +4,7 @@ import class_use
 import function_enc as fe
 from fastapi import FastAPI
 import OTPv1 as otp
+import otp10 
 app = FastAPI()
 # Allowed origins (frontend domains)
 origins = [
@@ -64,6 +65,10 @@ async def otpde(c:class_use.otp):
 
     #        'data_chr': otp.generate_chr(),
     #    'data_key': otp.generate_key()
+
+@app.post('/otp10enc')
+async def otp10enc(c:class_use.otp10):
+    return { 'data': otp10.otp10en(c.value) }
 
 @app.post('/otp_table')
 async def open_table(c:class_use.k_c_otp):
