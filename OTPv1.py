@@ -113,7 +113,8 @@ def writetxt_text(x):
 def interface_en(inputx,chrx,keyx):
     enc_chr = encrypt_chr(inputx,[chrx[i:i+3] for i in range(0, len(chrx), 3)])
     enc_total = encrypt_key(inputx,enc_chr,keyx)
-    return " ".join(enc_total[i:i+4] for i in range(0, len(enc_total), 4))
+    return " ".join(enc_total[i:i+6] for i in range(0, len(enc_total), 6))
+    #return " ".join(enc_total[i:i+4] for i in range(0, len(enc_total), 4))
 def interface_de(inputx,chrx,keyx):
     inputx = inputx.replace(' ','')
     x = decrypt_key(inputx,keyx)
