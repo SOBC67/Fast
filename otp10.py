@@ -2,6 +2,12 @@ def compare_text_with_array(text_array, long_text):
     result_bits = ""
     while len(long_text) >= 0:
         checkfind = 0
+        for item in wordlist:
+            for key, value in item.items():
+                if long_text.find(key) == 0:
+                    result_bits += value
+                    long_text = long_text[len(key):]
+
         for ta,ka in enumerate(text_array):
             for w,k in enumerate(ka):
                 if isinstance(k, list):
@@ -44,6 +50,7 @@ def reverse_this(text_array,enc):
 # ตัวอย่างการใช้งาน
 #text_array = [['สวัสดี', 'ลาก่อน'], ['รัก', 'คุณ']]
 
+wordlist = [{"บริเวณ":"04"},{"ทวน":"23"},{"ความถี่":"25"},{"พิกัด":"26"},{"ย่อ":"27"},{"พื้นที่":"62"},{"ผ่าน":"72"},{"เพื่อ":"74"}]
 
 text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S", "B"],
 ["อ","X", "P", "K", "N", "ื", "ฉ", "Y", "เ", "O"],
@@ -62,4 +69,5 @@ def otp10de(long_text):
 def otp10en(long_text):
     rx = compare_text_with_array(text_array, long_text)
     return " ".join(rx[i:i+4] for i in range(0, len(rx), 4))
-#print(otp10('พื้นที่ที่มึงจะต้องกินข้าววรรคสัศใช่ไหม'))
+#print(otp10en('ผ่านแนวพื้นที่'))
+#print(otp10de(otp10en('ผ่านแนวพื้นที่')))
