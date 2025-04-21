@@ -70,6 +70,10 @@ async def otpde(c:class_use.otp):
 async def otp10enc(c:class_use.otp10):
     return { 'data': otp10.otp10en(c.value) }
 
+@app.post('/otp10de')
+async def otp10de(c:class_use.otp10):
+    return { 'data': otp10.otp10de(c.value) }
+
 @app.post('/otp_table')
 async def open_table(c:class_use.k_c_otp):
     if c.types == "CHR":

@@ -26,22 +26,24 @@ def compare_text_with_array(text_array, long_text):
             break
     return result_bits
 
+
+def reverse_this(text_array,enc):
+    enc = enc.replace(' ','')
+    enc_n = (" ".join(enc[i:i+2] for i in range(0, len(enc), 2))).split(' ')
+    txt = ''
+    for e in enc_n:
+        #print(e)
+        #print(,end='')
+        xs = ''
+        x = text_array[int(e[0])][int(e[1])]
+        if isinstance(x,list):
+            txt += x[0]
+        else:
+            txt += x
+    return txt
 # ตัวอย่างการใช้งาน
 #text_array = [['สวัสดี', 'ลาก่อน'], ['รัก', 'คุณ']]
 
-
-'''
-text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S", "B"],
-["อ","X", "P", "K", "N", "ื", "ฉ", "Y", "เ", "O"],
-["ชณ",",","ทธฑฒ","ทวน", "ป", "ความถี่", "พิกัด", "ย่อ", "L", "๘"],
-["๑","พภ","0","ึ", "A", "ดฎ", "ิ", "ข", "I", "W"],
-["M","ะ","T","ฝ", ".", "ี", "C", "๊", "Z", "ก"],
-["้","นณ","ฮ","ซ", "แ", "/", "ลฤ", "๙", "สศษ", "F"],
-["ว","J","พื้นที่","๓", "๋", "คฆ", "วรรค", "ู", "า", "โ"],
-["ยญ","R","ผ่าน","Q", "เพื่อ", "V", "๕", "บ", "U", "ไ"],
-["ห","่","ั","๒", "ถฐ", "์", "รฦฬ", "D", "ง", "ม"],
-["ุ","ตฏ","๔","จ", "ๆ", "ผ", "ำ", "( - )", "็", "ั้"]]
-'''
 
 text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S", "B"],
 ["อ","X", "P", "K", "N", "ื", "ฉ", "Y", "เ", "O"],
@@ -54,6 +56,9 @@ text_array = [["E","H", "ฟ", "๖", "บริเวณ", "-", "G", "๗", "S"
 ["ห","่","ั","๒", ["ถ","ฐ"], "์", ["ร","ฦ","ฬ"], "D", "ง", "ม"],
 ["ุ",["ต","ฏ"],"๔","จ", "ๆ", "ผ", "ำ", "( - )", "็", "ั้"]]
 
+#print(reverse_this(text_array,"7980 5058 5182 7758 5190 5166 5824 4476 6679 8050 4982 7766 3156 4486 4476 6622 8251 2245 1889 1581 1058 8281 88"))
+def otp10de(long_text):
+    return reverse_this(text_array,long_text)
 def otp10en(long_text):
     rx = compare_text_with_array(text_array, long_text)
     return " ".join(rx[i:i+4] for i in range(0, len(rx), 4))
