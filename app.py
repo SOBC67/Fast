@@ -5,6 +5,7 @@ import function_enc as fe
 from fastapi import FastAPI
 import OTPv1 as otp
 import otp10 
+import test
 app = FastAPI()
 # Allowed origins (frontend domains)
 origins = [
@@ -73,7 +74,7 @@ async def otp10de(c:class_use.otp10):
 
 @app.get('/otp10map', tags=["One Time Pad"])
 async def get_otp10_map():
-    return {"text_map": otp10.get_current_text_map()}
+    return {"text_map": test.get_current_text_map()}
 
 # @app.post('/otp_table')
 # async def open_table(c:class_use.k_c_otp):
