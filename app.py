@@ -22,18 +22,15 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-
-
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+# @app.get("/items/{item_id}")
+# def read_item(item_id: int, q: Union[str, None] = None):
+#     return {"item_id": item_id, "q": q}
 
-@app.post('/encryption')
+@app.post('/encryption', tags=["Sonakul"])
 async def encrypt(k:class_use.encrypt):
     key = k.key 
     value = k.value
@@ -42,7 +39,7 @@ async def encrypt(k:class_use.encrypt):
     Key_return,LenWord,replaced_key,sort_Key,data,cc = fe.encrypt_key(key,value)
     return { "data": data ,"Key_Return":Key_return,"Len_word":LenWord,"Replace_Key":replaced_key,"Sort_Key":sort_Key,"cc":cc }
 
-@app.post('/decryption')
+@app.post('/decryption', tags=["Sonakul"])
 async def decrypt(k:class_use.encrypt):
     key = k.key 
     value = k.value
@@ -51,34 +48,34 @@ async def decrypt(k:class_use.encrypt):
     return { "data": data ,"Key_Return":Key_return,"Len_word":LenWord,"Replace_Key":replaced_key,"Sort_Key":sort_Key,"cc":cc }
     #return { "data": fe.decrypt_key(key,value) }
 
-@app.get('/otpkey')
+@app.get('/otpkey', tags=["One Time Password"])
 def otpkey():
     return { "data_chr": otp.generate_chr() , "data_key":otp.generate_key() }
 
-@app.post('/otpenc')
+@app.post('/otpenc', tags=["One Time Password"])
 async def otpenc(c:class_use.otp):
     return { 'data': otp.interface_en(c.value,c.c,c.k) }
 
-@app.post('/otpde')
+@app.post('/otpdec', tags=["One Time Password"])
 async def otpde(c:class_use.otp):
     return { 'data': otp.interface_de(c.value,c.c,c.k) }
 
     #        'data_chr': otp.generate_chr(),
     #    'data_key': otp.generate_key()
 
-@app.post('/otp10enc')
+@app.post('/otp10enc', tags=["One Time Pad"])
 async def otp10enc(c:class_use.otp10):
     return { 'data': otp10.otp10en(c.value) }
 
-@app.post('/otp10de')
+@app.post('/otp10dec', tags=["One Time Pad"])
 async def otp10de(c:class_use.otp10):
     return { 'data': otp10.otp10de(c.value) }
 
-@app.post('/otp_table')
-async def open_table(c:class_use.k_c_otp):
-    if c.types == "CHR":
-        return { 'data' : otp.interface_get_char_table(c.value)}
-    elif c.types == "KEY":
-        return { 'data' :otp.interface_get_key_table(c.value)}
-    else:
-        return { 'data' : "Not Found"}
+# @app.post('/otp_table')
+# async def open_table(c:class_use.k_c_otp):
+#     if c.types == "CHR":
+#         return { 'data' : otp.interface_get_char_table(c.value)}
+#     elif c.types == "KEY":
+#         return { 'data' :otp.interface_get_key_table(c.value)}
+#     else:
+#         return { 'data' : "Not Found"}
