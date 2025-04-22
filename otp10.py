@@ -66,8 +66,19 @@ text_array = [[["E","e"],["H","h"], "ฟ", ["6","๖"], "บริเวณ", "-
 #print(reverse_this(text_array,"7980 5058 5182 7758 5190 5166 5824 4476 6679 8050 4982 7766 3156 4486 4476 6622 8251 2245 1889 1581 1058 8281 88"))
 def otp10de(long_text):
     return reverse_this(text_array,long_text)
+# def otp10en(long_text):
+#     rx = compare_text_with_array(text_array, long_text)
+#     return " ".join(rx[i:i+4] for i in range(0, len(rx), 4))
+
 def otp10en(long_text):
     rx = compare_text_with_array(text_array, long_text)
+
+    # ถ้าหาร 4 ไม่ลงตัว ให้เติม '55' ต่อท้าย
+    while len(rx) % 4 != 0:
+        rx += '55'
+
     return " ".join(rx[i:i+4] for i in range(0, len(rx), 4))
+
+
 #print(otp10en('ผ่านแนวพื้นที่'))
 #print(otp10de(otp10en('ผ่านแนวพื้นที่')))
