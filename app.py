@@ -71,6 +71,10 @@ async def otp10enc(c:class_use.otp10):
 async def otp10de(c:class_use.otp10):
     return { 'data': otp10.otp10de(c.value) }
 
+@app.get('/otp10map', tags=["One Time Pad"])
+async def get_otp10_map():
+    return {"text_map": otp10.get_current_text_map()}
+
 # @app.post('/otp_table')
 # async def open_table(c:class_use.k_c_otp):
 #     if c.types == "CHR":
